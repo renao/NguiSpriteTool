@@ -26,4 +26,5 @@ sysinfo.txt
 Assets/UnityTestTools*
 
 # NGUI
-Assets/NGUI*
+Assets/NGUI/*
+Assets/NGUI.meta
