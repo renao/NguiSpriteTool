@@ -19,3 +19,11 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# 3rd party tools
+
+# UnityTestTools
+Assets/UnityTestTools*
+
+# NGUI
+Assets/NGUI*
