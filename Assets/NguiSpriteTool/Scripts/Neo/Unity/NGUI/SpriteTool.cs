@@ -11,8 +11,8 @@ namespace Neo.Unity.NGUI {
     
     private FileCrawler crawler;
 
-    public SpriteTool() {
-      crawler = new FileCrawler(Application.dataPath);
+    public SpriteTool(string dataPath=null) {
+      crawler = new FileCrawler(dataPath ?? Application.dataPath);
     }
 
     public void GetSpriteUsages() {
