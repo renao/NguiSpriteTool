@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
-using Neo.IO;
+using System;
 using UnityEngine;
+using Neo.IO;
+
 
 namespace Neo.Unity.NGUI {
   public class SpriteTool {
@@ -15,7 +17,7 @@ namespace Neo.Unity.NGUI {
       crawler = new FileCrawler(dataPath ?? Application.dataPath);
     }
 
-    public void GetSpriteUsages() {
+    public void GetSpriteUsages(Action Callback=null) {
       List<string> prefabLocations = crawler.FetchFilesByExtension("prefab");
 
       foreach (string location in prefabLocations) {
@@ -38,6 +40,7 @@ namespace Neo.Unity.NGUI {
           }
         }
       }
+      if(Callback != null) Callback();
     }
   }
 }

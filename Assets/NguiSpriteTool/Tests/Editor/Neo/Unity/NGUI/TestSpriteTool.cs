@@ -35,6 +35,12 @@ namespace Tests.Neo.Unity.NGUI {
       Assert.AreEqual(@"Assets\NguiSpriteTool\Tests\Editor\Prefabs\SpriteObject.prefab", tool.Prefabs[tool.Sprites[tool.Atlas[0]][0]][0]);
     }
 
+    [Test]
+    public void ExecutesCallback() {
+      tool.GetSpriteUsages(Assert.Pass);
+      Assert.Fail();
+    }
+
 
   }
 }
