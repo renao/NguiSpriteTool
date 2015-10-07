@@ -24,7 +24,7 @@ namespace Tests.Neo.Unity.NGUI {
     public void GetsSpriteAndAtlasInfo() {
       tool.GetSpriteUsages();
 
-      Assert.AreEqual(1, tool.Prefabs.Count);
+      Assert.AreEqual(3, tool.Prefabs.Count);
       Assert.AreEqual(1, tool.Atlas.Count);
       Assert.AreEqual(1, tool.Sprites.Count);
 
@@ -32,7 +32,8 @@ namespace Tests.Neo.Unity.NGUI {
       Assert.AreEqual("blue", tool.Sprites[tool.Atlas[0]][0].spriteName);
 
       Assert.AreEqual(1, tool.Prefabs[tool.Sprites[tool.Atlas[0]][0]].Count);
-      Assert.AreEqual(@"Assets\NguiSpriteTool\Tests\Editor\Prefabs\SpriteObject.prefab", tool.Prefabs[tool.Sprites[tool.Atlas[0]][0]][0]);
+      Assert.AreEqual(@"Assets\NguiSpriteTool\Tests\Editor\Prefabs\AnotherSpriteObjectWithBlueSprite.prefab", tool.Prefabs[tool.Sprites[tool.Atlas[0]][0]][0]);
+      Assert.Fail("Add missing two sprite assertions and extend with structure for atlas, sprite and prefabs");
     }
 
     [Test]
