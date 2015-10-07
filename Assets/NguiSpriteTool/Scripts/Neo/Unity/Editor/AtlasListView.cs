@@ -3,36 +3,43 @@ using UnityEngine;
 using System.Collections.Generic;
 
 namespace Neo.Unity.Editor {
-  public class AtlasListView : ScriptableObject {
+  public class AtlasListView {
 
     private UIAtlas atlas;
     private List<UISprite> sprites;
     private Dictionary<UISprite, List<string>> prefabs;
-    private Vector2 scrollPosition = Vector2.zero;
-    private bool unfolded = false;
+    private bool showsAtlasList = true;
 
+    private Dictionary<UISprite, AtlasListSpriteView> spriteViews = new Dictionary<UISprite, AtlasListSpriteView>();
 
     public AtlasListView(UIAtlas Atlas, List<UISprite> Sprites, Dictionary<UISprite, List<string>> Prefabs) {
       atlas = Atlas;
       sprites = Sprites;
       prefabs = Prefabs;
+
+      sprites.Sort((a, b) => {
+        return a.spriteName.CompareTo(b.spriteName);
+      });
+
+      
+      foreach(UISprite sprite in sprites) {
+        spriteViews[sprite] = new AtlasListSpriteView(sprite, prefabs[sprite]);
+      }
     }
 
     public void Draw(bool enabled=true) {
-      // scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-      unfolded = EditorGUILayout.InspectorTitlebar(unfolded, this);
-
-      if(unfolded) {
+      showsAtlasList = EditorGUILayout.Foldout(showsAtlasList, atlas.name);
+      if(showsAtlasList) {
         drawSprites();
       }
-      // EditorGUILayout.EndScrollView();
     }
 
     private void drawSprites() {
-      foreach(UISprite sprite in sprites) {
-        EditorGUILayout.PrefixLabel(sprite.spriteName);
-        EditorGUILayout.IntField(prefabs[sprite].Count);
+      EditorGUI.indentLevel = 1;
+      foreach(AtlasListSpriteView view in spriteViews.Values) {
+        view.Draw();
       }
+      EditorGUI.indentLevel = 0;
     }
   }
 }
