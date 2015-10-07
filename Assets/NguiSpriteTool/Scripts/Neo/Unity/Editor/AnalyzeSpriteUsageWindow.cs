@@ -32,7 +32,7 @@ namespace Neo.Unity.Editor {
         GUILayout.Label("Click the button to start Sprite analyzation.");
         GUILayout.Space(20);
         if(pendingAnalyzation) drawSuspender();
-        else if(GUILayout.Button("Analyze Sprite usage")) startAnalyzation();
+        else if(GUILayout.Button("Check sprite usage")) startAnalyzation();
       EditorGUI.EndDisabledGroup();
     }
 
