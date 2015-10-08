@@ -1,21 +1,20 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
+using Neo.Unity.NGUI.Models;
 
 namespace Neo.Unity.Editor {
   public class AtlasListSpriteView {
 
-    private UISprite sprite;
-    private List<string> prefabs;
+    private SpriteUsages spriteUsages;
     private bool showsSpriteList = false;
 
-    public AtlasListSpriteView(UISprite Sprite, List<string> Prefabs) {
-      sprite = Sprite;
-      prefabs = Prefabs;
+    public AtlasListSpriteView(SpriteUsages SpriteUsages) {
+      spriteUsages = SpriteUsages;
     }
 
     public void Draw(bool enabled=true) {
-      showsSpriteList = EditorGUILayout.Foldout(showsSpriteList, sprite.spriteName +  "[" + prefabs.Count + "]");
+      showsSpriteList = EditorGUILayout.Foldout(showsSpriteList, spriteUsages.sprite.spriteName +  "[" + spriteUsages.PrefabLocation.Count + "]");
       if(showsSpriteList) {
         drawPrefabInfos();
       }
@@ -23,7 +22,7 @@ namespace Neo.Unity.Editor {
 
     private void drawPrefabInfos() {
       EditorGUI.indentLevel += 1;
-      foreach(string prefab in prefabs) {
+      foreach(string prefab in spriteUsages.PrefabLocation) {
         GUILayout.BeginVertical();
           EditorGUILayout.LabelField(prefab);
           GUI.DrawTexture(textureRect, spriteTexture);
@@ -34,7 +33,7 @@ namespace Neo.Unity.Editor {
     }
     private Texture spriteTexture {
       get {
-        Texture2D tex = sprite.mainTexture as Texture2D;
+        Texture2D tex = spriteUsages.sprite.mainTexture as Texture2D;
         return tex;
       }
     }
@@ -42,8 +41,8 @@ namespace Neo.Unity.Editor {
     private Rect textureRect {
       get {
         Rect rect = new Rect();
-        rect.height = sprite.height;
-        rect.width = sprite.width;
+        rect.height = spriteUsages.sprite.height;
+        rect.width = spriteUsages.sprite.width;
         return rect;
       }
     }

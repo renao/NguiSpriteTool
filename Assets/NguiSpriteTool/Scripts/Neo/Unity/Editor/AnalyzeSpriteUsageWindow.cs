@@ -58,18 +58,11 @@ namespace Neo.Unity.Editor {
       pendingAnalyzation = false;
       containsResults = true;
 
-      foreach(UIAtlas atlas in spriteTool.Atlas) {
-        atlasViews[atlas] = new AtlasListView(
-          atlas,
-          spriteTool.Sprites[atlas],
-          spriteTool.Prefabs
-        );
+      foreach(UIAtlas atlas in spriteTool.Info.Atlasses) {
+        atlasViews[atlas] = new AtlasListView(atlas, spriteTool.Info.GetSpriteUsagesFrom(atlas));
         atlasViews[atlas].Draw();
       }
-
       Repaint();
     }
-
-
   }
 }
