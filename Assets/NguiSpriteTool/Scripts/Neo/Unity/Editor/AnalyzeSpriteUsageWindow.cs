@@ -14,8 +14,9 @@ namespace Neo.Unity.Editor {
     }
 
     private bool pendingAnalyzation = false;
-    private bool containsResults = false;
-    private Dictionary<UIAtlas, AtlasListView> atlasViews = new Dictionary<UIAtlas, AtlasListView>();
+    private Dictionary<string, AtlasListView> atlasViews = new Dictionary<string, AtlasListView>();
+    private int selectedIndex = 0;
+    private string[] atlasSelection = new string[0];
 
     private SpriteTool spriteTool;
     private Vector2 currentScrollPosition = Vector2.zero;
@@ -23,7 +24,7 @@ namespace Neo.Unity.Editor {
     void OnGUI() {
       currentScrollPosition = EditorGUILayout.BeginScrollView(currentScrollPosition);
         drawHeader();
-        if(containsResults) drawAtlasList();
+        drawAtlasList();
       EditorGUILayout.EndScrollView();
     }
 
@@ -43,8 +44,12 @@ namespace Neo.Unity.Editor {
     }
 
     private void drawAtlasList() {
-      foreach(AtlasListView view in atlasViews.Values) {
-        view.Draw();
+      if(
+        (selectedIndex < atlasSelection.Length)
+        && atlasViews.ContainsKey(atlasSelection[selectedIndex])
+      ) {
+        selectedIndex = EditorGUILayout.Popup(selectedIndex, atlasSelection);
+        atlasViews[atlasSelection[selectedIndex]].Draw();
       }
     }
 
@@ -56,13 +61,15 @@ namespace Neo.Unity.Editor {
 
     private void onSpritesReady() {
       pendingAnalyzation = false;
-      containsResults = true;
+      selectedIndex = 0;
+      atlasSelection = new string[spriteTool.Info.Atlasses.Count];
 
+      int i = 0;
       foreach(UIAtlas atlas in spriteTool.Info.Atlasses) {
-        atlasViews[atlas] = new AtlasListView(atlas, spriteTool.Info.GetSpriteUsagesFrom(atlas));
-        atlasViews[atlas].Draw();
+        atlasSelection[i] = atlas.name;
+        atlasViews[atlas.name] = new AtlasListView(atlas, spriteTool.Info.GetSpriteUsagesFrom(atlas));
+        i++;
       }
-      Repaint();
     }
   }
 }

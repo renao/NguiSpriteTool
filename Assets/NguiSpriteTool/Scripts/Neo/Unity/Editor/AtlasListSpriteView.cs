@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
 using Neo.Unity.NGUI.Models;
 
 namespace Neo.Unity.Editor {
@@ -8,6 +7,7 @@ namespace Neo.Unity.Editor {
 
     private SpriteUsages spriteUsages;
     private bool showsSpriteList = false;
+    private Vector2 scrollPosition = Vector2.zero;
 
     public AtlasListSpriteView(SpriteUsages SpriteUsages) {
       spriteUsages = SpriteUsages;
@@ -21,15 +21,14 @@ namespace Neo.Unity.Editor {
     }
 
     private void drawPrefabInfos() {
-      EditorGUI.indentLevel += 1;
-      foreach(string prefab in spriteUsages.PrefabLocation) {
-        GUILayout.BeginVertical();
+      scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+        EditorGUI.DrawPreviewTexture(textureRect, spriteTexture);
+        EditorGUI.indentLevel += 1;
+        foreach(string prefab in spriteUsages.PrefabLocation) {
           EditorGUILayout.LabelField(prefab);
-          GUI.DrawTexture(textureRect, spriteTexture);
-          EditorGUILayout.Separator();
-        GUILayout.EndVertical();
-      }
+        }
       EditorGUI.indentLevel -=1;
+      GUILayout.EndScrollView();
     }
     private Texture spriteTexture {
       get {
@@ -40,9 +39,12 @@ namespace Neo.Unity.Editor {
 
     private Rect textureRect {
       get {
-        Rect rect = new Rect();
-        rect.height = spriteUsages.sprite.height;
-        rect.width = spriteUsages.sprite.width;
+        Rect rect = new Rect(
+          x: 40,
+          y: 0,
+          width: 100,
+          height: 100
+          );
         return rect;
       }
     }
