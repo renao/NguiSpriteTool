@@ -30,14 +30,17 @@ namespace Neo.Unity.NGUI {
         string loc = location.Replace(Application.dataPath + @"\", @"Assets\");
         GameObject go = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(loc);
 
-        if(go != null) {
-          UISprite sprite = go.GetComponent<UISprite>();
-          if(sprite != null) {
-            Info.AddSprite(sprite, loc);
-          }
-        }
+        if(go != null) fetchSpritesFrom(go, loc);
       }
     }
+
+    private void fetchSpritesFrom(GameObject go, string location) {
+      UISprite[] sprites = go.GetComponentsInChildren<UISprite>(true);
+      if(sprites != null) {
+        foreach(UISprite sprite in sprites) Info.AddSprite(sprite, location);
+      }
+    }
+
 
   }
 }

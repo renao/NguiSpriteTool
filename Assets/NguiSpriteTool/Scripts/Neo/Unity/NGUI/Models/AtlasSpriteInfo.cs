@@ -10,12 +10,15 @@ namespace Neo.Unity.NGUI.Models {
     }
 
     public void AddSprite(UISprite Sprite, string PrefabLocation) {
-      if(!atlasses.ContainsKey(Sprite.atlas)) {
-        atlasses[Sprite.atlas] = new AtlasUsages(Sprite.atlas);
+      if(Sprite.atlas == null) {
+        UnityEngine.Debug.Log("Broken Atlas => " + Sprite.spriteName + "[" + PrefabLocation + "]");
+      } else {
+        if(!atlasses.ContainsKey(Sprite.atlas)) {
+          atlasses[Sprite.atlas] = new AtlasUsages(Sprite.atlas);
+        }
+        atlasses[Sprite.atlas].Add(Sprite, PrefabLocation);
       }
-      atlasses[Sprite.atlas].Add(Sprite, PrefabLocation);
     }
-
 
     public List<UIAtlas> Atlasses { get { return new List<UIAtlas>(atlasses.Keys); } }
     public AtlasUsages GetAtlasDataFor(UIAtlas atlas) { return atlasses[atlas]; }
