@@ -22,9 +22,10 @@ namespace Neo.Unity.Editor {
     private Vector2 currentScrollPosition = Vector2.zero;
 
     void OnGUI() {
+      EditorGUILayout.Separator();
       currentScrollPosition = EditorGUILayout.BeginScrollView(currentScrollPosition);
-        drawHeader();
-        drawAtlasList();
+      drawAtlasList();
+      drawHeader();
       EditorGUILayout.EndScrollView();
     }
 
@@ -67,7 +68,7 @@ namespace Neo.Unity.Editor {
       int i = 0;
       foreach(UIAtlas atlas in spriteTool.Info.Atlasses) {
         atlasSelection[i] = atlas.name;
-        atlasViews[atlas.name] = new AtlasListView(atlas, spriteTool.Info.GetSpriteUsagesFrom(atlas));
+        atlasViews[atlas.name] = new AtlasListView(spriteTool.Info.GetAtlasDataFor(atlas));
         i++;
       }
     }
