@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Neo.Unity.NGUI.Models;
+using UnityEngine;
 
 namespace Tests.Neo.Unity.NGUI.Models {
   public class TestSpriteUsages {
@@ -9,7 +10,8 @@ namespace Tests.Neo.Unity.NGUI.Models {
 
     [SetUp]
     public void SetUp() {
-      sprite = new UISprite();
+      GameObject go = new GameObject();
+      sprite = go.AddComponent<UISprite>();
       usages = new SpriteUsages(sprite);
     }
 

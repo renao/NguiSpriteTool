@@ -3,19 +3,34 @@
 namespace Neo.Unity.NGUI.Models {
   public class AtlasUsages {
     public UIAtlas Atlas;
-    public Dictionary<string, SpriteUsages> SpriteInfo;
+    public Dictionary<string, SpriteUsages> UsedSprites;
+    public List<string> UnusedSprites;
 
     public AtlasUsages(UIAtlas Atlas) {
       this.Atlas = Atlas;
-      SpriteInfo = new Dictionary<string, SpriteUsages>();
+      UsedSprites = new Dictionary<string, SpriteUsages>();
+
+      initUnusedSprites();
     }
 
     public void Add(UISprite Sprite, string PrefabLocation) {
-      if(!SpriteInfo.ContainsKey(Sprite.spriteName)) {
-        SpriteInfo[Sprite.spriteName] = new SpriteUsages(Sprite);
+      if(!UsedSprites.ContainsKey(Sprite.spriteName)) {
+        UsedSprites[Sprite.spriteName] = new SpriteUsages(Sprite);
       }
 
-      SpriteInfo[Sprite.spriteName].Add(PrefabLocation);
+      UsedSprites[Sprite.spriteName].Add(PrefabLocation);
+
+      if(UnusedSprites.Contains(Sprite.spriteName)) {
+        UnusedSprites.Remove(Sprite.spriteName);
+      }
     }
+
+
+    private void initUnusedSprites() {
+      UnusedSprites = new List<string>();
+      string[] sprites = Atlas.GetListOfSprites().ToArray();
+      if(sprites != null && sprites.Length > 0) UnusedSprites.AddRange(sprites);
+    }
+
   }
 }

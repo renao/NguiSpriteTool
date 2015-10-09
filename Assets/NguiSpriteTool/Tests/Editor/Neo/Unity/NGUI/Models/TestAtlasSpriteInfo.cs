@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Neo.Unity.NGUI.Models;
+using UnityEngine;
 
 namespace Tests.Neo.Unity.NGUI.Models {
   public class TestAtlasSpriteInfo{
@@ -20,12 +21,12 @@ namespace Tests.Neo.Unity.NGUI.Models {
 
     [Test]
     public void AddsSprite() {
-      UIAtlas testAtlas = new UIAtlas();
+      GameObject go = new GameObject();
+      UIAtlas testAtlas = go.AddComponent<UIAtlas>();
 
-      UISprite sprite = new UISprite() {
-        spriteName = "spriteName",
-        atlas = testAtlas
-      };
+      UISprite sprite = go.AddComponent<UISprite>();
+      sprite.spriteName = "spriteName";
+      sprite.atlas = testAtlas;
 
       Assert.NotNull(sprite);
       Assert.NotNull(sprite.atlas);
