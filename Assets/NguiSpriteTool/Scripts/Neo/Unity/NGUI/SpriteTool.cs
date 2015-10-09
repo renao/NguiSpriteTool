@@ -9,7 +9,7 @@ namespace Neo.Unity.NGUI {
   public class SpriteTool {
 
     public AtlasSpriteInfo Info;
-    
+
     private FileCrawler crawler;
 
     public SpriteTool(string dataPath=null) {
@@ -18,9 +18,15 @@ namespace Neo.Unity.NGUI {
     }
 
     public void GetSpriteUsages(Action Callback=null) {
+      fetchUsedSprites();
+      if(Callback != null) Callback();
+    }
+
+
+    private void fetchUsedSprites() {
       List<string> prefabLocations = crawler.FetchFilesByExtension("prefab");
 
-      foreach (string location in prefabLocations) {
+      foreach(string location in prefabLocations) {
         string loc = location.Replace(Application.dataPath + @"\", @"Assets\");
         GameObject go = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(loc);
 
@@ -31,8 +37,6 @@ namespace Neo.Unity.NGUI {
           }
         }
       }
-
-      if(Callback != null) Callback();
     }
 
   }
