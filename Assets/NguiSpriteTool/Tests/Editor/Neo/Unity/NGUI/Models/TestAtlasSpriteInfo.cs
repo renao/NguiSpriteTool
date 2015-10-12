@@ -39,5 +39,17 @@ namespace Tests.Neo.Unity.NGUI.Models {
       Assert.AreEqual(1, info.Atlasses.Count);
     }
 
+    [Test]
+    public void HandlesInvalidAtlas() {
+      GameObject go = new GameObject();
+      UISprite noAtlasSprite = go.AddComponent<UISprite>();
+
+      info.AddSprite(noAtlasSprite, "some location");
+
+      Assert.AreEqual(1, info.Issues.Count);
+      Assert.AreEqual(noAtlasSprite, info.Issues[0].Sprite);
+      Assert.AreEqual("some location", info.Issues[0].PrefabLocation);
+      Assert.AreEqual(UISpriteInconsistence.AtlasNotFound, info.Issues[0].Inconsistence);
+    }
   }
 }

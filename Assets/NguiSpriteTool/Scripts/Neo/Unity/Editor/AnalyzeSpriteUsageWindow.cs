@@ -15,6 +15,7 @@ namespace Neo.Unity.Editor {
 
     private bool pendingAnalyzation = false;
     private Dictionary<string, AtlasListView> atlasViews = new Dictionary<string, AtlasListView>();
+    private IssueListView issueListView;
     private int selectedIndex = 0;
     private string[] atlasSelection = new string[0];
 
@@ -24,24 +25,22 @@ namespace Neo.Unity.Editor {
     void OnGUI() {
       EditorGUILayout.Separator();
       currentScrollPosition = EditorGUILayout.BeginScrollView(currentScrollPosition);
+      drawIssueList();
       drawAtlasList();
       drawHeader();
       EditorGUILayout.EndScrollView();
-    }
-
-    private void drawHeader() {
-      EditorGUI.BeginDisabledGroup(pendingAnalyzation);
-        GUILayout.Label("Click the button to start Sprite analyzation.");
-        GUILayout.Space(20);
-        if(pendingAnalyzation) drawSuspender();
-        else if(GUILayout.Button("Check sprite usage")) startAnalyzation();
-      EditorGUI.EndDisabledGroup();
     }
 
     private void drawSuspender() {
       GUILayout.Space(10);
       GUILayout.Label("Please wait ...");
       GUILayout.Space(20);
+    }
+
+    private void drawIssueList() {
+      if(issueListView != null) {
+        issueListView.Draw();
+      }
     }
 
     private void drawAtlasList() {
@@ -54,6 +53,18 @@ namespace Neo.Unity.Editor {
       }
     }
 
+    private void drawHeader() {
+      EditorGUI.BeginDisabledGroup(pendingAnalyzation);
+      GUILayout.Label("Check UISprite usage inside your prefabs.");
+      GUILayout.Space(20);
+      if(pendingAnalyzation)
+        drawSuspender();
+      else if(GUILayout.Button("Start"))
+        startAnalyzation();
+      EditorGUI.EndDisabledGroup();
+    }
+
+
     private void startAnalyzation() {
       pendingAnalyzation = true;
       spriteTool = new SpriteTool();
@@ -64,6 +75,7 @@ namespace Neo.Unity.Editor {
       pendingAnalyzation = false;
       selectedIndex = 0;
       atlasSelection = new string[spriteTool.Info.Atlasses.Count];
+      issueListView = new IssueListView(spriteTool.Info.Issues);
 
       int i = 0;
       foreach(UIAtlas atlas in spriteTool.Info.Atlasses) {
