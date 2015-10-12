@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
 namespace Neo.Unity.NGUI.Models {
-  public class SpriteUsages {
+  public class SpriteLink {
     public UISprite sprite;
     public List<string> PrefabLocation;
 
-    public SpriteUsages(UISprite sprite) {
+    public SpriteLink(UISprite sprite) {
       this.sprite = sprite;
       PrefabLocation = new List<string>();
     }

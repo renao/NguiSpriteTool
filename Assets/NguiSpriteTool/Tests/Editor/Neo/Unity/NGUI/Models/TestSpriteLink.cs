@@ -6,13 +6,13 @@ namespace Tests.Neo.Unity.NGUI.Models {
   public class TestSpriteUsages {
 
     private UISprite sprite;
-    private SpriteUsages usages;
+    private SpriteLink usages;
 
     [SetUp]
     public void SetUp() {
       GameObject go = new GameObject();
       sprite = go.AddComponent<UISprite>();
-      usages = new SpriteUsages(sprite);
+      usages = new SpriteLink(sprite);
     }
 
     [Test]

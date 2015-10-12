@@ -5,10 +5,10 @@ using Neo.Unity.NGUI.Models;
 namespace Neo.Unity.Editor {
   public class AtlasListSpriteView {
 
-    private SpriteUsages spriteUsages;
+    private SpriteLink spriteUsages;
     private bool showsSpriteList = false;
 
-    public AtlasListSpriteView(SpriteUsages SpriteUsages) {
+    public AtlasListSpriteView(SpriteLink SpriteUsages) {
       spriteUsages = SpriteUsages;
     }
 

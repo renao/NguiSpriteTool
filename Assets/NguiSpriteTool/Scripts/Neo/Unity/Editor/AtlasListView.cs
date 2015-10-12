@@ -14,7 +14,7 @@ namespace Neo.Unity.Editor {
 
     public AtlasListView(AtlasUsages UsageInfo) {
       atlasUsage = UsageInfo;
-      foreach(SpriteUsages usage in atlasUsage.UsedSprites.Values) {
+      foreach(SpriteLink usage in atlasUsage.UsedSprites.Values) {
         spriteViews[usage.sprite] = new AtlasListSpriteView(usage);
       }
     }
