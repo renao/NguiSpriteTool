@@ -56,10 +56,11 @@ namespace Neo.Unity.Editor {
     private void drawHeader() {
       EditorGUI.BeginDisabledGroup(pendingAnalyzation);
       GUILayout.Label("Check UISprite usage inside your prefabs.");
+      GUILayout.Label("NOTE: Only static UISprites supported!");
       GUILayout.Space(20);
       if(pendingAnalyzation)
         drawSuspender();
-      else if(GUILayout.Button("Start"))
+      else if(GUILayout.Button("Analyze"))
         startAnalyzation();
       EditorGUI.EndDisabledGroup();
     }
