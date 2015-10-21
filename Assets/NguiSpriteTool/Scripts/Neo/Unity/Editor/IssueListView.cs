@@ -8,9 +8,6 @@ namespace Neo.Unity.Editor {
     private List<SpriteIssue> issues;
     private bool showsIssues = true;
 
-
-    private Dictionary<UISprite, AtlasListSpriteView> spriteViews = new Dictionary<UISprite, AtlasListSpriteView>();
-
     public IssueListView(List<SpriteIssue> Issues) {
       issues = Issues;
     }
