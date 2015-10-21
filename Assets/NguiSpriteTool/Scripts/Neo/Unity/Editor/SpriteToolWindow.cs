@@ -4,11 +4,11 @@ using Neo.Unity.NGUI;
 using System.Collections.Generic;
 
 namespace Neo.Unity.Editor {
-  public class AnalyzeSpriteUsageWindow : EditorWindow {
+  public class SpriteToolWindow : EditorWindow {
 
-    [MenuItem("Tools/NGUI/Sprites Overview")]
+    [MenuItem("Tools/NGUI/Sprite Tool")]
     public static void ShowWindow() {
-      AnalyzeSpriteUsageWindow currentWindow = GetWindow<AnalyzeSpriteUsageWindow>();
+      SpriteToolWindow currentWindow = GetWindow<SpriteToolWindow>();
       currentWindow.titleContent.text = "Sprite Overview";
       currentWindow.titleContent.image = AssetDatabase.LoadAssetAtPath<Texture>(@"Assets\NguiSpriteTool\Tests\Editor\Prefabs\NguiElements\ExampleTextures\blue.png");
     }
