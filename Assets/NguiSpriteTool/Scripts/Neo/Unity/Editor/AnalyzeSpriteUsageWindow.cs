@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Neo.Unity.Editor {
   public class AnalyzeSpriteUsageWindow : EditorWindow {
 
-    [MenuItem("Neo/NGUI/Sprite Overview")]
+    [MenuItem("Tools/NGUI/Sprites Overview")]
     public static void ShowWindow() {
       AnalyzeSpriteUsageWindow currentWindow = GetWindow<AnalyzeSpriteUsageWindow>();
       currentWindow.titleContent.text = "Sprite Overview";
