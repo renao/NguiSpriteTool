@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Neo.Unity.NGUI.Models;
 
-namespace Neo.Unity.Editor {
+namespace Neo.Unity.Editor.Views.SpriteTool {
   public class AtlasListView {
 
     private AtlasUsages atlasUsage;

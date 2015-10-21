@@ -1,7 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using Neo.Unity.NGUI;
 using System.Collections.Generic;
+using Neo.Unity.Editor.Views.SpriteTool;
+using Neo.Unity.NGUI;
 
 namespace Neo.Unity.Editor {
   public class SpriteToolWindow : EditorWindow {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using Neo.Unity.NGUI.Models;
 
-namespace Neo.Unity.Editor {
+namespace Neo.Unity.Editor.Views.SpriteTool {
   public class AtlasListSpriteView {
 
     private SpriteLink spriteUsages;
@@ -21,31 +21,19 @@ namespace Neo.Unity.Editor {
 
     private void drawPrefabInfos() {
       EditorGUILayout.BeginVertical();
-        // EditorGUI.DrawPreviewTexture(textureRect, spriteTexture);
         EditorGUI.indentLevel += 1;
         foreach(string prefab in spriteUsages.PrefabLocation) {
-          EditorGUILayout.LabelField(prefab);
+          if (GUILayout.Button(new GUIContent(prefab), EditorStyles.miniButton)) {
+            selectGameObjectAt(prefab);
+          }
         }
       EditorGUI.indentLevel -=1;
       GUILayout.EndVertical();
     }
-    private Texture spriteTexture {
-      get {
-        Texture2D tex = spriteUsages.sprite.mainTexture as Texture2D;
-        return tex;
-      }
+
+    private void selectGameObjectAt(string path) {
+      Selection.activeGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(path);
     }
 
-    private Rect textureRect {
-      get {
-        Rect rect = new Rect(
-          x: 40,
-          y: 0,
-          width: 100,
-          height: 100
-          );
-        return rect;
-      }
-    }
   }
 }
