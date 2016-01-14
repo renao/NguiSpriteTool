@@ -7,11 +7,10 @@ using Neo.Unity.NGUI;
 namespace Neo.Unity.Editor {
   public class SpriteToolWindow : EditorWindow {
 
-    [MenuItem("Tools/NGUI/Sprite Tool")]
+    [MenuItem("Tools/NGUI/Sprites Overview")]
     public static void ShowWindow() {
       SpriteToolWindow currentWindow = GetWindow<SpriteToolWindow>();
-      currentWindow.titleContent.text = "Sprite Overview";
-      currentWindow.titleContent.image = AssetDatabase.LoadAssetAtPath<Texture>(@"Assets\NguiSpriteTool\Tests\Editor\Prefabs\NguiElements\ExampleTextures\blue.png");
+      currentWindow.titleContent.text = "Sprites";
     }
 
     private bool pendingAnalyzation = false;
@@ -56,8 +55,11 @@ namespace Neo.Unity.Editor {
 
     private void drawHeader() {
       EditorGUI.BeginDisabledGroup(pendingAnalyzation);
+      Color guiDefault = GUI.color;
       GUILayout.Label("Check UISprite usage inside your prefabs.");
+      GUI.color = Color.green;
       GUILayout.Label("NOTE: Only static UISprites supported!");
+      GUI.color = guiDefault;
       GUILayout.Space(20);
       if(pendingAnalyzation)
         drawSuspender();
