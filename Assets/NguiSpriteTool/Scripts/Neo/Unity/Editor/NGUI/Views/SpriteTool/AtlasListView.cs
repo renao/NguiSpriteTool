@@ -22,7 +22,7 @@ namespace Neo.Unity.Editor.Views.SpriteTool {
     public void Draw() {
       EditorGUILayout.Separator();
 
-      showsUnusedList = EditorGUILayout.Foldout(showsUnusedList, "Unused Sprites [" + atlasUsage.UnusedSprites.Count + "]");
+      showsUnusedList = EditorGUILayout.Foldout(showsUnusedList, "Not linked [" + atlasUsage.UnusedSprites.Count + "]");
       if(showsUnusedList) {
         EditorGUILayout.BeginVertical();
         EditorGUI.indentLevel += 1;
@@ -35,7 +35,7 @@ namespace Neo.Unity.Editor.Views.SpriteTool {
       }
 
       EditorGUILayout.Separator();
-      showsAtlasList = EditorGUILayout.Foldout(showsAtlasList, "Used Sprites [" + atlasUsage.UsedSprites.Count + "]");
+      showsAtlasList = EditorGUILayout.Foldout(showsAtlasList, "Linked [" + atlasUsage.UsedSprites.Count + "]");
       if(showsAtlasList) {
         drawSprites();
       }
