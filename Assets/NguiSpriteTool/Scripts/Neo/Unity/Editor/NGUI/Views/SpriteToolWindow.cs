@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
+using Neo.Collections;
 using Neo.Unity.Editor.Views.SpriteTool;
 using Neo.Unity.NGUI;
 
