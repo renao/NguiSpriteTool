@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
+using Neo.Collections;
 
 namespace Neo.IO {
   public class FileCrawler {
@@ -20,13 +20,13 @@ namespace Neo.IO {
     private List<string> fetchFilesFrom(string path) {
       List<string> files = new List<string>();
 
-      foreach(string dir in Directory.GetDirectories(path)) {
+      Directory.GetDirectories(path).ForEach(dir => {
         files.AddRange(fetchFilesFrom(dir));
-      }
+      });
 
-      foreach(string file in Directory.GetFiles(path, searchPattern)) {
+      Directory.GetFiles(path, searchPattern).ForEach(file =>  {
         files.Add(file);
-      }
+      });
 
       return files;
     }
