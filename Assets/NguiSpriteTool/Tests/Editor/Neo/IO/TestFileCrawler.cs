@@ -16,27 +16,34 @@ namespace Tests.Neo.IO {
     * File:   C:\temp\TestFolder\SubFolder\noprefab
     */
 
-    private FileCrawler crawler;
-
-    [SetUp]
-    public void SetUp() {
-      crawler = new FileCrawler(absoluteTestFolderPath);
-    }
 
     [Test]
-    public void Inits() {
-      Assert.IsNotNull(crawler);
+    public void ReturnsAllFilesWithoutGivenFileExtension() {
+      List<string> prefabs = FileCrawler.FetchFilesRecursively(absoluteTestFolderPath);
+
+      Assert.IsNotNull(prefabs);
+      Assert.AreEqual(4, prefabs.Count);
+
+      assertContains(prefabs, @"C:\temp\TestFolder\SubFolder\b.prefab");
+      assertContains(prefabs, @"C:\temp\TestFolder\a.prefab");
+      assertContains(prefabs, @"C:\temp\TestFolder\SubFolder\noprefab");
+      assertContains(prefabs, @"C:\temp\TestFolder\noprefab");
     }
 
 
     [Test]
     public void LooksForFilesWithPrefabExtension() {
-      List<string> prefabs = crawler.FetchFilesByExtension("prefab");
+      List<string> prefabs = FileCrawler.FetchFilesRecursively(absoluteTestFolderPath, "prefab");
 
       Assert.IsNotNull(prefabs);
       Assert.AreEqual(2, prefabs.Count);
+
       Assert.AreEqual(@"C:\temp\TestFolder\SubFolder\b.prefab", prefabs[0]);
       Assert.AreEqual(@"C:\temp\TestFolder\a.prefab",  prefabs[1]);
+    }
+
+    private void assertContains(List<string> collection, string expected) {
+      Assert.True(collection.Contains(expected));
     }
 
     private string absoluteTestFolderPath {
