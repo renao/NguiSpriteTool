@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Neo.Collections;
 
 namespace Neo.Unity.NGUI.Models {
   public class SpriteLink {
