@@ -10,6 +10,7 @@ namespace Neo.Unity.Editor {
     [MenuItem("Tools/NGUI/Sprites Overview")]
     public static void ShowWindow() {
       SpriteToolWindow currentWindow = GetWindow<SpriteToolWindow>();
+      currentWindow.titleContent.image = Resources.Load<Texture>("NguiSpriteTool/sprite-overview-icon");
       currentWindow.titleContent.text = "Sprites";
     }
 
