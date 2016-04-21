@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Neo.IO;
 using Neo.Unity.NGUI.Models;
-using SceneManager = UnityEditor.SceneManagement.EditorSceneManager;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using SceneManager = UnityEditor.SceneManagement.EditorSceneManager;
 
 namespace Neo.Unity.NGUI {
   public class SpriteTool {
@@ -57,14 +57,32 @@ namespace Neo.Unity.NGUI {
       }
     }
 
-    private void fetchSpritesFromScene(Scene scene) {
-      scene.GetRootGameObjects().ForEach((parent) => {
-        fetchSpritesFromGameObject(parent, sceneGameObjectPath(scene, parent));
-      });
+    private void fetchSpriteWithScenePath(string currentPath, GameObject sceneObject) {
+      foreach (UISprite sprite in sceneObject.GetComponents<UISprite>()) {
+        Info.AddSprite(sprite, currentPath);
+      }
+      for (int i = 0; i < sceneObject.transform.childCount; i++) {
+        fetchSpriteWithScenePath(string.Format("{0} => {1}", currentPath, sceneObject.name), sceneObject.transform.GetChild(i).gameObject);
+      }
     }
 
-    private string sceneGameObjectPath(Scene scene, GameObject go) {
-      return string.Format("{0} => {1}", scene.name, go.name);
+    private void fetchSpritesFromScene(Scene scene) {
+      scene.GetRootGameObjects().ForEach((rootObject) => {
+        fetchSpriteWithScenePath(Formatter.ScenePath(scene), rootObject);
+      });
+    }
+    
+    internal class Formatter {
+      public static string SceneInScenePath = "[{0}] ";
+      public static string ChildOfFormat = "{0} => {1}";
+
+      public static string ScenePath(Scene scene) {
+        return string.Format("[{0}] ", scene.name);
+      }
+
+      public static string ExtendPathWithGameObject(string currentPath, GameObject gameObject) {
+        return string.Format(ChildOfFormat, currentPath, gameObject.name);
+      }
     }
   }
 }
