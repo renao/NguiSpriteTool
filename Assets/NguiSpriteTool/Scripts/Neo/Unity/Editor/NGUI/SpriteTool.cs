@@ -62,7 +62,10 @@ namespace Neo.Unity.NGUI {
         Info.AddSprite(sprite, currentPath);
       }
       for (int i = 0; i < sceneObject.transform.childCount; i++) {
-        fetchSpriteWithScenePath(string.Format("{0} => {1}", currentPath, sceneObject.name), sceneObject.transform.GetChild(i).gameObject);
+        fetchSpriteWithScenePath(
+          Formatter.ExtendPathWithGameObject(currentPath, sceneObject),
+          sceneObject.transform.GetChild(i).gameObject
+        );
       }
     }
 
@@ -77,7 +80,7 @@ namespace Neo.Unity.NGUI {
       public static string ChildOfFormat = "{0} => {1}";
 
       public static string ScenePath(Scene scene) {
-        return string.Format("[{0}] ", scene.name);
+        return string.Format(SceneInScenePath, scene.name);
       }
 
       public static string ExtendPathWithGameObject(string currentPath, GameObject gameObject) {
