@@ -1,24 +1,25 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using Neo.Collections;
+using Neo.UI;
 using Neo.Unity.Editor.Views.SpriteTool;
 using Neo.Unity.NGUI;
 
 namespace Neo.Unity.Editor {
   public class SpriteToolWindow : EditorWindow {
 
-    [MenuItem("Tools/NGUI/Sprites Overview")]
+    [MenuItem("Tools/NGUI/UISprite Usage")]
     public static void ShowWindow() {
       SpriteToolWindow currentWindow = GetWindow<SpriteToolWindow>();
       currentWindow.titleContent.image = Resources.Load<Texture>("NguiSpriteTool/sprite-overview-icon");
-      currentWindow.titleContent.text = "Sprites";
+      currentWindow.titleContent.text = "UISprite Usage";
     }
 
-    private bool pendingAnalyzation = false;
     private Dictionary<string, AtlasListView> atlasViews = new Dictionary<string, AtlasListView>();
     private IssueListView issueListView;
     private int selectedIndex = 0;
     private string[] atlasSelection = new string[0];
+    private bool pendingAnalyzation = false;
 
     private SpriteTool spriteTool;
     private Vector2 currentScrollPosition = Vector2.zero;
@@ -34,7 +35,7 @@ namespace Neo.Unity.Editor {
 
     private void drawSuspender() {
       GUILayout.Space(10);
-      GUILayout.Label("Please wait ...");
+      GUILayout.Label("Please wait.");
       GUILayout.Space(20);
     }
 
@@ -57,9 +58,9 @@ namespace Neo.Unity.Editor {
     private void drawHeader() {
       EditorGUI.BeginDisabledGroup(pendingAnalyzation);
       Color guiDefault = GUI.color;
-      GUILayout.Label("Check UISprite usage inside your prefabs.");
-      GUI.color = Color.green;
-      GUILayout.Label("NOTE: Only static UISprites supported!");
+      GUILayout.Label("Analyze the usage of UISprite in this project.");
+      GUI.color = Colorizer.Invert(GUI.backgroundColor);
+      GUILayout.Label("NOTE: This tool does only support statically set UISprites from prefabs and scenes inside this project folder.");
       GUI.color = guiDefault;
       GUILayout.Space(20);
       if(pendingAnalyzation)
