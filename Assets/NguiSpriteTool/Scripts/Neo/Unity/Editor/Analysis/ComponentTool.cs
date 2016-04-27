@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using Neo.IO;
-using Neo.Unity.Analysis.Models;
+using Neo.Unity.Analysis.Models.Base;
 using Neo.Unity.Analysis.Formatters;
 
 namespace Neo.Unity.Analysis {
   public class ComponentTool<T> where T : Component {
 
-    public ComponentInfoList<T> Info {get; private set; }
+    public ComponentInfoList<T> Info {get; protected set; }
     internal string dataPath;
     internal ComponentInfoFormatter formatter;
 
