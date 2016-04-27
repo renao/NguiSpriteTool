@@ -1,9 +1,10 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using Neo.Collections;
 using Neo.UI;
-using Neo.Unity.Editor.Views.SpriteTool;
 using Neo.Unity.NGUI;
+using Neo.Unity.Analysis.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Neo.Unity.Editor {
   public class SpriteToolWindow : EditorWindow {
@@ -15,21 +16,37 @@ namespace Neo.Unity.Editor {
       currentWindow.titleContent.text = "UISprite Usage";
     }
 
-    private Dictionary<string, AtlasListView> atlasViews = new Dictionary<string, AtlasListView>();
-    private IssueListView issueListView;
-    private int selectedIndex = 0;
-    private string[] atlasSelection = new string[0];
+    //private Dictionary<UIAtlas, AtlasListView> atlasViews = new Dictionary<UIAtlas, AtlasListView>();
+    // private IssueListView issueListView;
+    //private int selectedIndex = 0;
+    //private UIAtlas[] atlasSelection = new UIAtlas[0];
+    /*private string[] atlasNames {
+      get {
+        string[] names = new string[atlasSelection.Length];
+
+        for (int i = 0; i < atlasSelection.Length; i++) {
+          names[i] = atlasSelection[i].name;
+        }
+
+        return names;
+      }
+    }*/
+
+    private int currentAtlasIndex = 0;
+    private string[] currentAtlasNames = new string[0];
     private bool pendingAnalyzation = false;
 
-    private SpriteTool spriteTool;
+    private SpriteTool spriteTool = new SpriteTool();
     private Vector2 currentScrollPosition = Vector2.zero;
 
     void OnGUI() {
       EditorGUILayout.Separator();
       currentScrollPosition = EditorGUILayout.BeginScrollView(currentScrollPosition);
-      drawIssueList();
-      drawAtlasList();
       drawHeader();
+      if (spriteTool != null) {
+       drawAtlasList();
+        // drawIssueList();
+      }
       EditorGUILayout.EndScrollView();
     }
 
@@ -39,21 +56,35 @@ namespace Neo.Unity.Editor {
       GUILayout.Space(20);
     }
 
+    /*
     private void drawIssueList() {
       if(issueListView != null) {
         issueListView.Draw();
       }
     }
+    */
 
+    private void drawAtlasList() {
+      if(currentAtlasIndex < currentAtlasNames.Length) {
+        EditorGUILayout.LabelField(string.Format("Select Atlas [{0} / {1}]", currentAtlasIndex + 1, spriteTool.SpriteInfos.Atlasses.Count));
+        currentAtlasIndex = EditorGUILayout.Popup(currentAtlasIndex, currentAtlasNames);
+      }
+      /*
+      foreach(Dictionary<string, List<UISpriteInfo>> spriteInfo in spriteTool.SpriteInfos.Atlasses[currentAtlasName].AtlasSpriteInfos) {
+        // EditorGUILayout.LabelField(spriteInfo.Component.spriteName);
+      }*/
+    }
+    /*
     private void drawAtlasList() {
       if(
         (selectedIndex < atlasSelection.Length)
         && atlasViews.ContainsKey(atlasSelection[selectedIndex])
       ) {
-        selectedIndex = EditorGUILayout.Popup(selectedIndex, atlasSelection);
+        selectedIndex = EditorGUILayout.Popup(selectedIndex, atlasNames);
         atlasViews[atlasSelection[selectedIndex]].Draw();
       }
     }
+    */
 
     private void drawHeader() {
       EditorGUI.BeginDisabledGroup(pendingAnalyzation);
@@ -65,30 +96,33 @@ namespace Neo.Unity.Editor {
       GUILayout.Space(20);
       if(pendingAnalyzation)
         drawSuspender();
-      else if(GUILayout.Button("Analyze"))
-        startAnalyzation();
+      else if(GUILayout.Button("Analyze")) {
+        onAnalyze();
+      }
       EditorGUI.EndDisabledGroup();
     }
 
 
-    private void startAnalyzation() {
+    private void onAnalyze() {
       pendingAnalyzation = true;
       spriteTool = new SpriteTool();
-      spriteTool.GetSpriteUsages(onSpritesReady);
+      spriteTool.FetchComponentInfo(onFinished);
     }
 
-    private void onSpritesReady() {
+    private void onFinished() {
       pendingAnalyzation = false;
-      selectedIndex = 0;
-      atlasSelection = new string[spriteTool.Info.Atlasses.Count];
-      issueListView = new IssueListView(spriteTool.Info.Issues);
-
-      int i = 0;
-      foreach(UIAtlas atlas in spriteTool.Info.Atlasses) {
-        atlasSelection[i] = atlas.name;
-        atlasViews[atlas.name] = new AtlasListView(spriteTool.Info.GetAtlasDataFor(atlas));
+      currentAtlasIndex = 0;
+      UnityEngine.Debug.Log("TODO: Fix this.");
+      currentAtlasNames = spriteTool.SpriteInfos.Atlasses.Keys.ToArray<string>();
+      // selectedIndex = 0;
+      // atlasSelection = new UIAtlas[spriteTool.SpriteInfo.UsedAtlasses.Count];
+      // int i = 0;
+      /*foreach (UIAtlas atlas in spriteTool.SpriteInfo.UsedAtlasses) {
+        atlasSelection[i] = atlas;
+        atlasViews[atlas] = new AtlasListView(atlas, (spriteTool.Info as UISpriteInfoList).UsedAtlasses[atlas]);
         i++;
-      }
+      }*/
+      // issueListView = new IssueListView(spriteTool.Info.Issues);
     }
   }
 }

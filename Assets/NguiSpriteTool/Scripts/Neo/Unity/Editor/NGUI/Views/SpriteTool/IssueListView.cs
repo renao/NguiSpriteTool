@@ -1,10 +1,9 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
-using Neo.Unity.NGUI.Models;
 
 namespace Neo.Unity.Editor.Views.SpriteTool {
   public class IssueListView {
-
+    /*
     private List<SpriteIssue> issues;
     private bool showsIssues = true;
 
@@ -37,5 +36,6 @@ namespace Neo.Unity.Editor.Views.SpriteTool {
       EditorGUILayout.EndVertical();
       EditorGUI.indentLevel -= 1;
     }
+    */
   }
 }

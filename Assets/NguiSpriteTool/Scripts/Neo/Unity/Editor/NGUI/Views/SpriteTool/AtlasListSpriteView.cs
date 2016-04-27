@@ -1,28 +1,28 @@
-﻿using UnityEditor;
+﻿using Neo.Unity.Analysis.Models;
+using UnityEditor;
 using UnityEngine;
-using Neo.Unity.NGUI.Models;
 
 namespace Neo.Unity.Editor.Views.SpriteTool {
   public class AtlasListSpriteView {
 
-    private SpriteLink spriteUsages;
+    private UISpriteInfo spriteInfo;
     private bool showsSpriteList = false;
 
-    public AtlasListSpriteView(SpriteLink SpriteUsages) {
-      spriteUsages = SpriteUsages;
+    public AtlasListSpriteView(UISpriteInfo spriteInfo) {
+      this.spriteInfo = spriteInfo;
     }
 
     public void Draw(bool enabled=true) {
-      showsSpriteList = EditorGUILayout.Foldout(showsSpriteList, spriteUsages.sprite.spriteName +  "[" + spriteUsages.PrefabLocation.Count + "]");
-      if(showsSpriteList) {
+      showsSpriteList = EditorGUILayout.Foldout(showsSpriteList, spriteInfo.Component.spriteName);
+      /*if(showsSpriteList) {
         drawPrefabInfos();
-      }
+      }*/
     }
-
+    /*
     private void drawPrefabInfos() {
       EditorGUILayout.BeginVertical();
         EditorGUI.indentLevel += 1;
-        foreach(string prefab in spriteUsages.PrefabLocation) {
+        foreach(string prefab in spriteInfo.AtlasLocation) {
           if (GUILayout.Button(new GUIContent(prefab), EditorStyles.miniButton)) {
             selectGameObjectAt(prefab);
           }
@@ -31,9 +31,10 @@ namespace Neo.Unity.Editor.Views.SpriteTool {
       GUILayout.EndVertical();
     }
 
+
     private void selectGameObjectAt(string path) {
       Selection.activeGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(path);
     }
-
+    */
   }
 }

@@ -1,41 +1,39 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
-using Neo.Unity.NGUI.Models;
 
 namespace Neo.Unity.Editor.Views.SpriteTool {
   public class AtlasListView {
 
-    private AtlasUsages atlasUsage;
+    private UIAtlas atlas;
+    private List<UISprite> sprites;
     private bool showsAtlasList = false;
     private bool showsUnusedList = false;
 
 
     private Dictionary<UISprite, AtlasListSpriteView> spriteViews = new Dictionary<UISprite, AtlasListSpriteView>();
 
-    public AtlasListView(AtlasUsages UsageInfo) {
-      atlasUsage = UsageInfo;
-      foreach(SpriteLink usage in atlasUsage.UsedSprites.Values) {
-        spriteViews[usage.sprite] = new AtlasListSpriteView(usage);
-      }
+    public AtlasListView(UIAtlas atlas, List<UISprite> sprites) {
+      this.atlas = atlas;
+      this.sprites = sprites;
     }
 
     public void Draw() {
       EditorGUILayout.Separator();
-
-      showsUnusedList = EditorGUILayout.Foldout(showsUnusedList, "Not linked [" + atlasUsage.UnusedSprites.Count + "]");
+      /*
+      showsUnusedList = EditorGUILayout.Foldout(showsUnusedList, "Not linked [" + sprites.Count + "]");
       if(showsUnusedList) {
         EditorGUILayout.BeginVertical();
         EditorGUI.indentLevel += 1;
 
-        foreach(string spriteName in atlasUsage.UnusedSprites) {
+         foreach(string spriteName in atlasUsage.UnusedSprites) {
           EditorGUILayout.LabelField(spriteName);
         }
         EditorGUI.indentLevel -= 1;
         EditorGUILayout.EndVertical();
       }
-
       EditorGUILayout.Separator();
-      showsAtlasList = EditorGUILayout.Foldout(showsAtlasList, "Linked [" + atlasUsage.UsedSprites.Count + "]");
+      */
+      showsAtlasList = EditorGUILayout.Foldout(showsAtlasList, "Linked [" + sprites.Count + "]");
       if(showsAtlasList) {
         drawSprites();
       }
