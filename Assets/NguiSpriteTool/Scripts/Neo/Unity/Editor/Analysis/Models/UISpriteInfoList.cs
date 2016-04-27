@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Neo.Unity.Analysis.Models;
 using Neo.Unity.Analysis.Models.Base;
-using Neo.Unity.Editor.Analysis.Models;
 
 namespace Neo.Unity.Analysis.Models {
   public class UISpriteInfoList : ComponentInfoList<UISprite> {

@@ -30,7 +30,7 @@ namespace Tests.Neo.Unity.Analysis.Models {
       Assert.AreEqual(1, spriteInfoList.Atlasses.Count);
       Assert.True(spriteInfoList.Atlasses.ContainsKey(spInfo.Sprite.atlas.name));
       Assert.NotNull(spriteInfoList.Atlasses[spInfo.Sprite.atlas.name]);
-      Assert.AreEqual(1, spriteInfoList.Atlasses[spInfo.Sprite.atlas.name].AtlasSpriteInfos.Count);
+      Assert.AreEqual(1, spriteInfoList.Atlasses[spInfo.Sprite.atlas.name].SpriteInfos.Count);
     }
 
     private UISpriteInfo spriteInfo() {
