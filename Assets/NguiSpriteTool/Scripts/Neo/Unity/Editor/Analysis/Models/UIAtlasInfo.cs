@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
-using Neo.Unity.Analysis.Models;
+using Neo.Unity.Analysis.Models.Base;
 
 namespace Neo.Unity.Analysis.Models {
-  public class UIAtlasInfo {
-    public UIAtlas Atlas;
-    public Dictionary<string, List<UISpriteInfo>> SpriteInfos;
+  public class UIAtlasInfo : ComponentInfo<UIAtlas> {
 
-    public UIAtlasInfo(UIAtlas atlas) {
-      Atlas = atlas;
-      SpriteInfos = new Dictionary<string, List<UISpriteInfo>>();
+    public UIAtlas Atlas { get { return SpriteInfos[0].Atlas; } }
+    public List<UISpriteInfo> SpriteInfos;
+
+    public UIAtlasInfo(UIAtlas atlas, string location) : base(atlas, location) {
+      Component = atlas;
+      SpriteInfos = new List<UISpriteInfo>();
     }
 
-    public void AddSpriteInfo(UISpriteInfo spriteInfo) {
-      string spriteName = spriteInfo.Sprite.spriteName;
-      if (Atlas.name != spriteInfo.Sprite.atlas.name) return;
-
-      if (!SpriteInfos.ContainsKey(spriteName)) {
-        SpriteInfos[spriteName] = new List<UISpriteInfo>();
-      }
-      SpriteInfos[spriteName].Add(spriteInfo);
+    public void AddAtlasSpriteInfo(UISpriteInfo spriteInfo) {
+      if (spriteInfo.Sprite.atlas == null) return;
+      SpriteInfos.Add(spriteInfo);
     }
   }
 }
