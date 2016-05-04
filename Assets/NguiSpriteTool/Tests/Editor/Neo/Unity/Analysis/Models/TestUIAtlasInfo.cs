@@ -11,7 +11,7 @@ namespace Tests.Neo.Unity.Analysis.Models {
     [SetUp]
     public void SetUp() {
       spriteInfo = createSpriteInfo();
-      info = new UIAtlasInfo(spriteInfo.Sprite.atlas);
+      info = new UIAtlasInfo(spriteInfo.Sprite.atlas, "some_location");
     }
 
     [Test]
@@ -22,10 +22,10 @@ namespace Tests.Neo.Unity.Analysis.Models {
 
     [Test]
     public void AddsSpriteInfo() {
-      info.AddSpriteInfo(spriteInfo);
+      info.AddAtlasSpriteInfo(spriteInfo);
 
       Assert.AreEqual(1, info.SpriteInfos.Count);
-      Assert.AreEqual(spriteInfo, info.SpriteInfos[spriteInfo.Sprite.spriteName][0]);
+      Assert.AreEqual(spriteInfo, info.SpriteInfos[0]);
     }
 
     private UISpriteInfo createSpriteInfo() {

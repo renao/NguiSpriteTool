@@ -4,7 +4,7 @@ using Neo.Unity.Analysis.Models.Base;
 namespace Neo.Unity.Analysis.Models {
   public class UIAtlasInfo : ComponentInfo<UIAtlas> {
 
-    public UIAtlas Atlas { get { return SpriteInfos[0].Atlas; } }
+    public UIAtlas Atlas { get { return Component; } }
     public List<UISpriteInfo> SpriteInfos;
 
     public UIAtlasInfo(UIAtlas atlas, string location) : base(atlas, location) {
