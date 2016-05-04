@@ -11,6 +11,7 @@ namespace Neo.Unity.Analysis {
   public class ComponentTool<T> where T : Component {
 
     public ComponentInfoList<T> Info {get; protected set; }
+
     internal string dataPath;
     internal ComponentInfoFormatter formatter;
 
@@ -59,7 +60,7 @@ namespace Neo.Unity.Analysis {
       T[] components = go.GetComponentsInChildren<T>(true);
       if(components != null) {
         foreach(T component in components) {
-          Info.Add(createComponentInfo(component, location));
+          Info.Add(createComponentInfo(component as T, location));
         }
       }
     }
