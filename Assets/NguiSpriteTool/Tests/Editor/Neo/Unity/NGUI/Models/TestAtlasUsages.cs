@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using Neo.Unity.NGUI.Models;
 using UnityEngine;
+using Neo.Unity.SpriteTool.Models.NGUI;
 
 namespace Tests.Neo.Unity.NGUI.Models {
   public class TestAtlasUsages {

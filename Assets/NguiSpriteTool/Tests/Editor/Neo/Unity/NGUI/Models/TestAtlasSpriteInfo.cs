@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Neo.Unity.NGUI.Models;
+﻿using Neo.Unity.SpriteTool.Models.NGUI;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Tests.Neo.Unity.NGUI.Models {

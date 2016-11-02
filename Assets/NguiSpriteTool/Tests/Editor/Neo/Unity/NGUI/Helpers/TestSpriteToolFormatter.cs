@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Neo.Unity.NGUI.Helpers;
 using UnityEngine;
 using UnityEditor.SceneManagement;
+using Neo.Unity.SpriteTool.Helpers;
 
 namespace Tests.Neo.Unity.NGUI.Helpers {
   public class TestSpriteToolFormatter{

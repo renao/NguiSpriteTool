@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using Neo.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using SceneManager = UnityEditor.SceneManagement.EditorSceneManager;
-using Neo.Unity.SpriteTool.Models.NGUI;
+using UnityEngine.UI;
 using Neo.Unity.SpriteTool.Helpers;
+using Neo.Unity.UnityUI.Models;
 
-namespace Neo.Unity.NGUI {
+using SceneManager = UnityEditor.SceneManagement.EditorSceneManager;
+
+namespace Neo.Unity.UnityUI {
   public class SpriteTool {
 
-    public AtlasSpriteInfo Info;
+    public List<SpriteUsage> SpriteInfos;
     private string dataPath;
 
     public SpriteTool(string dataPath=null) {
-      Info = new AtlasSpriteInfo();
+      SpriteInfos = new List<SpriteUsage>();
       this.dataPath = dataPath ?? Application.dataPath;
     }
 
@@ -52,15 +54,20 @@ namespace Neo.Unity.NGUI {
     }
 
     private void fetchSpritesFromGameObject(GameObject go, string location) {
-      UISprite[] sprites = go.GetComponentsInChildren<UISprite>(true);
-      if(sprites != null) {
-        foreach(UISprite sprite in sprites) Info.AddSprite(sprite, location);
+      Image[] images = go.GetComponentsInChildren<Image>(true);
+      if(images != null) {
+        foreach(Image image in images) {
+          if (image.sprite != null) {
+            addToCollection(image, location);
+          }
+          // TODO: if == null => Report broken sprite.
+        }
       }
     }
 
     private void fetchSpriteWithScenePath(string currentPath, GameObject sceneObject) {
-      foreach (UISprite sprite in sceneObject.GetComponents<UISprite>()) {
-        Info.AddSprite(sprite, currentPath);
+      foreach (Image image in sceneObject.GetComponents<Image>()) {
+        addToCollection(image, currentPath);
       }
       for (int i = 0; i < sceneObject.transform.childCount; i++) {
         fetchSpriteWithScenePath(
@@ -74,6 +81,17 @@ namespace Neo.Unity.NGUI {
       scene.GetRootGameObjects().ForEach((rootObject) => {
         fetchSpriteWithScenePath(SpriteToolFormatter.ScenePath(scene), rootObject);
       });
+    }
+
+
+    private void addToCollection(Image image, string location) {
+      SpriteUsage spriteUsage = SpriteInfos.Find((info) => info.Sprite.name == image.sprite.name);
+
+      if (spriteUsage == null) {
+        SpriteInfos.Add(new SpriteUsage(image, location));
+      } else {
+        spriteUsage.AddReference(location);
+      }
     }
   }
 }

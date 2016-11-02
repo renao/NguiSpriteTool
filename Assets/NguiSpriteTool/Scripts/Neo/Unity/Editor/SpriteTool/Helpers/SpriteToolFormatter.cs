@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Neo.Unity.NGUI.Helpers {
+namespace Neo.Unity.SpriteTool.Helpers {
   public class SpriteToolFormatter {
     private static string scenePathFormat = "[{0}] ";
     private static string childOfFormat = "{0} => {1}";

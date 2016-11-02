@@ -2,10 +2,9 @@
 using UnityEngine;
 using Neo.Collections;
 using Neo.UI;
-using Neo.Unity.Editor.Views.SpriteTool;
-using Neo.Unity.NGUI;
+using Neo.Unity.NGUI.Views.SpriteTool;
 
-namespace Neo.Unity.Editor {
+namespace Neo.Unity.NGUI.Windows {
   public class SpriteToolWindow : EditorWindow {
 
     [MenuItem("Tools/NGUI/UISprite Usage")]

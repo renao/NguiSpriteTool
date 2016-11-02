@@ -1,4 +1,4 @@
-﻿namespace Neo.Unity.NGUI.Models {
+﻿namespace Neo.Unity.SpriteTool.Models.NGUI {
   public class SpriteIssue {
 
     public UISprite Sprite;

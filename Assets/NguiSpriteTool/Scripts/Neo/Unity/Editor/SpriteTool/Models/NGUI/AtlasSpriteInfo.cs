@@ -1,6 +1,6 @@
 ﻿using Neo.Collections;
 
-namespace Neo.Unity.NGUI.Models {
+namespace Neo.Unity.SpriteTool.Models.NGUI {
   public class AtlasSpriteInfo {
 
     private Dictionary<UIAtlas, AtlasUsages> atlasses;
