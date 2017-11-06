@@ -1,3 +1,7 @@
+# ABANDONED
+
+We left NGUI in favour of Unity UI and the TinyTools just became needless after collecting more experience inside the available Unity- and .NET Framework.
+
 # UnityTools
 Personal playground for some individual editor scripts.
 
